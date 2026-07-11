@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { headers } from "next/headers";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,20 +14,36 @@ const geistMono = Geist_Mono({
 
 const title = "Senior Android Developer — Portfolio";
 const description = "Портфолио Senior Android-разработчика: Kotlin, Jetpack Compose, архитектура и продуктовая инженерия.";
+const isGitHubPages = process.env.GITHUB_ACTIONS === "true";
+const siteUrl = isGitHubPages
+  ? "https://roman-074.github.io/Portfolio"
+  : "https://android-systems-portfolio.romanf.chatgpt.site";
+const assetPrefix = isGitHubPages ? "/Portfolio" : "";
+const socialImage = `${siteUrl}/og.png`;
 
-export async function generateMetadata(): Promise<Metadata> {
-  const requestHeaders = await headers();
-  const host = requestHeaders.get("x-forwarded-host") ?? requestHeaders.get("host") ?? "localhost:3000";
-  const protocol = requestHeaders.get("x-forwarded-proto") ?? (host.includes("localhost") ? "http" : "https");
-  const image = `${protocol}://${host}/og.png`;
-  return {
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title,
+  description,
+  icons: {
+    icon: `${assetPrefix}/favicon.svg`,
+    shortcut: `${assetPrefix}/favicon.svg`,
+  },
+  openGraph: {
     title,
     description,
-    icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
-    openGraph: { title, description, type: "website", locale: "ru_RU", images: [{ url: image, width: 1731, height: 909, alt: title }] },
-    twitter: { card: "summary_large_image", title, description, images: [image] },
-  };
-}
+    type: "website",
+    locale: "ru_RU",
+    url: siteUrl,
+    images: [{ url: socialImage, width: 1731, height: 909, alt: title }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: [socialImage],
+  },
+};
 
 export default function RootLayout({
   children,
