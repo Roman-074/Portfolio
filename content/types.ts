@@ -9,8 +9,6 @@ export type FlowLayer = {
   nodes: string[];
   /** Visually emphasised layer — normally the agent itself. */
   accent?: boolean;
-  /** Draw nodes as peers linked in both directions (e.g. sources cross-checked against each other). */
-  linked?: boolean;
 };
 
 export type FlowOwner = "developer" | "agent" | "shared";
@@ -23,24 +21,52 @@ export type FlowStep = {
 
 export type Diagram =
   | { kind: "layers"; title: string; layers: FlowLayer[] }
-  | { kind: "steps"; title: string; steps: FlowStep[] };
+  | { kind: "steps"; title: string; steps: FlowStep[] }
+  | {
+      kind: "crosscheck";
+      title: string;
+      /** Exactly three sources, drawn as the corners of a triangle. */
+      sources: [string, string, string];
+      agent: string;
+      findings: string[];
+      /** What the agent does when a source is unclear. */
+      rule: string;
+    };
 
 export type CaseNote = {
   title: string;
   text: string;
 };
 
+export type FindingType = "contradiction" | "ambiguity" | "missing" | "question";
+
 export type SampleFinding = {
-  type: "contradiction" | "ambiguity" | "missing" | "question";
+  /** Number shown on the mark in the spec text and on the note. */
+  n: number;
+  type: FindingType;
   label: string;
   ref: string;
   text: string;
 };
 
-/** Illustrative agent output shown in the hero. Always labelled as an example on the page. */
+/** A run of spec text; `note` marks it as the subject of a finding. */
+export type SpecSpan = string | { text: string; note: number };
+
+export type SpecLine = {
+  ref: string;
+  spans: SpecSpan[];
+  /** Finding number for a missing piece, drawn as an insertion caret at the end of the line. */
+  insert?: number;
+};
+
+/**
+ * Illustrative agent output shown in the hero: a spec excerpt with review
+ * marks and the matching notes. Always labelled as an example on the page.
+ */
 export type SampleOutput = {
-  command: string;
-  source: string;
+  file: string;
+  version: string;
+  lines: SpecLine[];
   findings: SampleFinding[];
   outputs: string[];
 };
@@ -57,8 +83,11 @@ export type CaseStudy = {
   result: string;
   stack: string[];
   diagram: Diagram;
-  /** Short labelled lists shown next to the diagram, e.g. "Detects" / "Produces". */
-  lists?: { title: string; items: string[] }[];
+  /**
+   * Short labelled lists. In the featured case each is shown as a large count
+   * followed by `countLabel`, e.g. "8 kinds of problems it finds".
+   */
+  lists?: { title: string; items: string[]; countLabel?: string }[];
   /** Engineering decisions and principles for technical readers. */
   notes?: CaseNote[];
   links?: Link[];

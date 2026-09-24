@@ -1,15 +1,15 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { JetBrains_Mono, Schibsted_Grotesk } from "next/font/google";
 import { asset, site } from "../content/site";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const sans = Schibsted_Grotesk({
+  variable: "--font-schibsted",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const mono = JetBrains_Mono({
+  variable: "--font-jetbrains",
   subsets: ["latin"],
 });
 
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: site.themeColor,
-  colorScheme: "dark",
+  colorScheme: "light",
 };
 
 export default function RootLayout({
@@ -53,8 +53,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>{children}</body>
+    // Font variables live on <html> so that --font-sans in :root can resolve them.
+    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }

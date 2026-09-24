@@ -1,40 +1,54 @@
 import type { ReactNode } from "react";
+import { sectionIndex } from "../navigation";
 
-export function SectionHeader({
+/**
+ * Page section with the document-style margin: "§n Label" sits in the left
+ * column (sticky on desktop), everything else in the main column.
+ */
+export function Section({
   id,
-  index,
-  eyebrow,
+  label,
   title,
+  intro,
+  tone = "paper",
   children,
 }: {
-  /** Id of the heading, referenced by the section's aria-labelledby. */
   id: string;
-  index: string;
-  eyebrow: string;
-  title: string;
-  children?: ReactNode;
+  label: string;
+  title: ReactNode;
+  intro?: ReactNode;
+  tone?: "paper" | "ink";
+  children: ReactNode;
 }) {
+  const index = sectionIndex(id);
+
   return (
-    <header className="section-head">
-      <p className="eyebrow">
-        <span className="eyebrow__index">{index}</span>
-        {eyebrow}
-      </p>
-      <h2 className="section-title" id={id}>
-        {title}
-      </h2>
-      {children && <div className="section-intro">{children}</div>}
-    </header>
+    <section className={`section section--${tone}`} id={id} aria-labelledby={`${id}-title`}>
+      <div className="shell section__layout">
+        <p className="section__mark">
+          {index && <span className="section__index">§{index}</span>}
+          {label}
+        </p>
+        <div className="section__main">
+          <header className="section-head">
+            <h2 className="section-title" id={`${id}-title`}>
+              {title}
+            </h2>
+            {intro && <div className="section-intro">{intro}</div>}
+          </header>
+          {children}
+        </div>
+      </div>
+    </section>
   );
 }
 
-export function TagList({ items, label }: { items: string[]; label?: string }) {
+/** Inline list separated by middle dots — for stacks and short enumerations. */
+export function DotList({ items, label, className }: { items: string[]; label?: string; className?: string }) {
   return (
-    <ul className="tags" aria-label={label}>
+    <ul className={className ? `dot-list ${className}` : "dot-list"} aria-label={label}>
       {items.map((item) => (
-        <li className="tag" key={item}>
-          {item}
-        </li>
+        <li key={item}>{item}</li>
       ))}
     </ul>
   );
