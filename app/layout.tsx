@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { asset, site } from "../content/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -12,37 +13,38 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const title = "Senior Android Developer — Portfolio";
-const description = "Портфолио Senior Android-разработчика: Kotlin, Jetpack Compose, архитектура и продуктовая инженерия.";
-const isGitHubPages = process.env.GITHUB_ACTIONS === "true";
-const siteUrl = isGitHubPages
-  ? "https://roman-074.github.io/Portfolio"
-  : "https://android-systems-portfolio.romanf.chatgpt.site";
-const assetPrefix = isGitHubPages ? "/Portfolio" : "";
-const socialImage = `${siteUrl}/og.png`;
+const socialImage = `${site.url}/og.png`;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title,
-  description,
+  metadataBase: new URL(site.url),
+  title: site.title,
+  description: site.description,
+  alternates: {
+    canonical: `${site.url}/`,
+  },
   icons: {
-    icon: `${assetPrefix}/favicon.svg`,
-    shortcut: `${assetPrefix}/favicon.svg`,
+    icon: asset("/favicon.svg"),
+    shortcut: asset("/favicon.svg"),
   },
   openGraph: {
-    title,
-    description,
+    title: site.title,
+    description: site.description,
     type: "website",
-    locale: "ru_RU",
-    url: siteUrl,
-    images: [{ url: socialImage, width: 1731, height: 909, alt: title }],
+    locale: site.locale,
+    url: `${site.url}/`,
+    images: [{ url: socialImage, width: 1200, height: 630, alt: site.title }],
   },
   twitter: {
     card: "summary_large_image",
-    title,
-    description,
+    title: site.title,
+    description: site.description,
     images: [socialImage],
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: site.themeColor,
+  colorScheme: "dark",
 };
 
 export default function RootLayout({
@@ -51,12 +53,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {children}
-      </body>
+    <html lang="en">
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>{children}</body>
     </html>
   );
 }

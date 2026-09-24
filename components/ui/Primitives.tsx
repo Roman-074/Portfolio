@@ -1,34 +1,41 @@
-"use client";
-
-import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 
-export function Reveal({ children, className = "" }: { children: ReactNode; className?: string }) {
-  const reduced = useReducedMotion();
+export function SectionHeader({
+  id,
+  index,
+  eyebrow,
+  title,
+  children,
+}: {
+  /** Id of the heading, referenced by the section's aria-labelledby. */
+  id: string;
+  index: string;
+  eyebrow: string;
+  title: string;
+  children?: ReactNode;
+}) {
   return (
-    <motion.div
-      className={className}
-      initial={reduced ? false : { opacity: 0, y: 24 }}
-      whileInView={reduced ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
-    >
-      {children}
-    </motion.div>
+    <header className="section-head">
+      <p className="eyebrow">
+        <span className="eyebrow__index">{index}</span>
+        {eyebrow}
+      </p>
+      <h2 className="section-title" id={id}>
+        {title}
+      </h2>
+      {children && <div className="section-intro">{children}</div>}
+    </header>
   );
 }
 
-export function SectionHeading({ index, children, note }: { index: string; children: ReactNode; note?: string }) {
+export function TagList({ items, label }: { items: string[]; label?: string }) {
   return (
-    <div className="section-heading">
-      <span className="section-index">/{index}</span>
-      <h2>{children}</h2>
-      <div className="heading-line" />
-      {note && <span className="heading-note">{note}</span>}
-    </div>
+    <ul className="tags" aria-label={label}>
+      {items.map((item) => (
+        <li className="tag" key={item}>
+          {item}
+        </li>
+      ))}
+    </ul>
   );
-}
-
-export function TechBadge({ children }: { children: ReactNode }) {
-  return <span className="tech-badge">{children}</span>;
 }
