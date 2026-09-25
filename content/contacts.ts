@@ -1,4 +1,3 @@
-import { profile } from "./profile";
 import type { ContactChannel } from "./types";
 
 /**
@@ -32,8 +31,7 @@ export const contactChannels: ContactChannel[] = [
   contacts.linkedin && {
     kind: "linkedin" as const,
     label: "LinkedIn",
-    // The profile slug ends in a numeric id; the name reads better at display size.
-    value: profile.name,
+    value: displayUrl(contacts.linkedin),
     href: contacts.linkedin,
   },
   contacts.github && {

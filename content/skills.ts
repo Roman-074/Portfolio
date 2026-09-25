@@ -1,31 +1,41 @@
 import type { StackGroup } from "./types";
 
 /**
- * Grouped by where it is used. Only list what has actually been used.
- * Candidates to add once confirmed: MCP, n8n, RAG, embeddings, vector search,
- * webhooks, specific DI library, other model APIs.
+ * Only list what has actually been used. Candidates to add once confirmed:
+ * MCP, n8n, RAG, embeddings, vector search, webhooks, specific model APIs.
  */
 export const stack: StackGroup[] = [
   {
-    title: "Mobile",
-    items: ["Kotlin", "Android", "Jetpack Compose", "Flutter"],
-  },
-  {
-    title: "Architecture",
-    items: ["Modularization", "Coroutines / Flow", "DI", "REST · Ktor", "System design"],
-  },
-  {
-    title: "AI & automation",
+    title: "AI / LLM",
     items: [
       "LLM APIs (DeepSeek)",
       "Structured output",
-      "Prompt & context engineering",
-      "Tool calling · agent workflows",
-      "Claude Code · OpenAI Codex",
+      "Prompt engineering",
+      "Context engineering",
+      "Coding agents: Claude Code, OpenAI Codex",
     ],
   },
   {
-    title: "Delivery",
-    items: ["Git", "GitLab CI/CD", "Firebase", "Jira / YouTrack integrations"],
+    title: "Agents & automation",
+    items: ["Agent workflows", "Tool calling", "External API integrations", "Engineering workflow automation"],
+  },
+  {
+    title: "Software engineering",
+    items: [
+      "Kotlin",
+      "Android",
+      "Jetpack Compose",
+      "Coroutines / Flow",
+      "Flutter",
+      "Ktor",
+      "REST",
+      "Firebase",
+      "Git",
+      "GitLab CI/CD",
+    ],
+  },
+  {
+    title: "Architecture",
+    items: ["Modular architecture", "System design", "Asynchronous systems", "API integrations", "Automation workflows"],
   },
 ];

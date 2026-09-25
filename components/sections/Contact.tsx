@@ -1,53 +1,54 @@
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, FileText } from "lucide-react";
 import { contactChannels } from "../../content/contacts";
 import { profile } from "../../content/profile";
 import { asset } from "../../content/site";
 import { hasContactSection } from "../navigation";
-import { Section } from "../ui/Primitives";
+import { SectionHeader } from "../ui/Primitives";
 
 export function Contact() {
   if (!hasContactSection) return null;
 
   return (
-    <Section
-      id="contact"
-      label="Contact"
-      title="Hiring for AI engineering or a senior Android role?"
-      intro={
-        <p>
-          I’m open to {formatList(profile.openTo)} roles, and to building agents for engineering and business
-          workflows.
-        </p>
-      }
-    >
-      <ul className="channels">
-        {contactChannels.map((channel) => {
-          const external = channel.kind !== "email";
-          return (
-            <li key={channel.kind}>
-              <a
-                className="channel"
-                href={channel.href}
-                {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
-              >
-                <span className="channel__label">{channel.label}</span>
-                <span className="channel__value">{channel.value}</span>
+    <section className="section section--contact" id="contact" aria-labelledby="contact-title">
+      <div className="shell contact">
+        <SectionHeader id="contact-title" index="05" eyebrow="Contact" title="Let’s talk">
+          <p>
+            Open to {formatList(profile.openTo)} roles, and to building AI agents for engineering and business
+            workflows.
+          </p>
+        </SectionHeader>
+
+        <ul className="channels">
+          {contactChannels.map((channel) => {
+            const external = channel.kind !== "email";
+            return (
+              <li key={channel.kind}>
+                <a
+                  className="channel"
+                  href={channel.href}
+                  {...(external ? { target: "_blank", rel: "noreferrer" } : {})}
+                >
+                  <span className="channel__label">{channel.label}</span>
+                  <span className="channel__value">{channel.value}</span>
+                  <ArrowUpRight aria-hidden />
+                </a>
+              </li>
+            );
+          })}
+          {profile.resumeUrl && (
+            <li>
+              <a className="channel" href={asset(profile.resumeUrl)}>
+                <span className="channel__label">Resume</span>
+                <span className="channel__value">
+                  <FileText aria-hidden /> PDF
+                </span>
                 <ArrowUpRight aria-hidden />
               </a>
             </li>
-          );
-        })}
-        {profile.resumeUrl && (
-          <li>
-            <a className="channel" href={asset(profile.resumeUrl)}>
-              <span className="channel__label">Resume</span>
-              <span className="channel__value">PDF</span>
-              <ArrowUpRight aria-hidden />
-            </a>
-          </li>
-        )}
-      </ul>
-    </Section>
+          )}
+        </ul>
+      </div>
+    </section>
   );
 }
 
