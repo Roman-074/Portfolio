@@ -6,6 +6,7 @@ import type { NavItem } from "./navigation";
 
 export function HeaderNav({ items }: { items: NavItem[] }) {
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -13,6 +14,26 @@ export function HeaderNav({ items }: { items: NavItem[] }) {
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
   }, [open]);
+
+  // Highlight the section that crosses the middle of the viewport.
+  useEffect(() => {
+    const sections = items
+      .map((item) => document.getElementById(item.id))
+      .filter((element): element is HTMLElement => element !== null);
+    if (sections.length === 0 || !("IntersectionObserver" in window)) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(entry.target.id);
+          else if (entry.target.id === sections[0].id && entry.boundingClientRect.top > 0) setActive(null);
+        }
+      },
+      { rootMargin: "-45% 0px -54% 0px" },
+    );
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [items]);
 
   return (
     <>
@@ -30,7 +51,11 @@ export function HeaderNav({ items }: { items: NavItem[] }) {
         <ul>
           {items.map((item) => (
             <li key={item.id}>
-              <a href={`#${item.id}`} onClick={() => setOpen(false)}>
+              <a
+                href={`#${item.id}`}
+                aria-current={active === item.id ? "location" : undefined}
+                onClick={() => setOpen(false)}
+              >
                 {item.label}
               </a>
             </li>

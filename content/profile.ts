@@ -7,41 +7,38 @@
 export const profile = {
   name: "Roman Fedorov",
   initials: "RF",
-  role: "Senior Software Engineer",
-  specialization: "AI Agent Engineer",
+  role: "Senior Android Engineer",
+  specialization: "AI agents",
 
-  headline:
-    "I build AI agents that turn requirements, code and project context into structured engineering work.",
+  /** The h1. Reads as one sentence: "<name>, <headline>" */
+  headline: "senior Android engineer who builds AI agents.",
   intro:
-    "Senior Software Engineer with a production background in large modular mobile applications. I now apply that experience to LLM systems: agents that review specifications, plan and audit implementation, and automate development and business workflows — with validation built in and engineers accountable for the result.",
+    "Day job: large modular Android apps in production and the high-load features inside them. Alongside it I build agents that review specifications, plan implementation and check code against requirements.",
 
-  /** Quiet one-line list of focus areas under the hero text. */
-  focus: ["Production engineering", "System design", "AI agents", "LLM workflows", "Automation"],
-
-  /** Three short columns at the bottom of the hero: the 30-second read. */
+  /** Three short columns under the hero: the 30-second read. */
   snapshot: [
     {
-      label: "Background",
-      text: "Senior Software / Android Engineer. Production apps, modular architecture, concurrency, CI/CD, code review and technical interviews.",
+      label: "Day job",
+      text: "Senior Android engineer on large production apps. Kotlin, Compose, Coroutines / Flow, modular architecture, CI/CD, code review, technical interviews.",
     },
     {
-      label: "Focus now",
-      text: "AI agents and LLM workflows: requirements analysis, spec-to-code audits, AI-assisted development and business process automation.",
+      label: "Alongside",
+      text: "Three agent systems: requirements review, an AI-assisted development workflow and a spec ↔ implementation audit.",
     },
     {
-      label: "Principle",
-      text: "Start from the business problem, not the model. When requirements are ambiguous, the agent asks — it does not invent product behavior.",
+      label: "House rule",
+      text: "If a requirement is unclear, the agent asks. It never fills the gap with product behavior nobody decided on.",
     },
   ],
 
   /** Roles this portfolio targets; shown in the contact section. */
-  openTo: ["AI Engineer", "AI Agent Engineer", "LLM Engineer", "Senior Software Engineer"],
+  openTo: ["AI Engineer", "AI Agent Engineer", "LLM Engineer", "Senior Android / Software Engineer"],
 
   /** Put a PDF into public/resume/ and set e.g. "/resume/roman-fedorov-resume.pdf". */
   resumeUrl: null as string | null,
   /** e.g. "Remote · Europe". */
   location: null as string | null,
-  /** e.g. "8+". Shown in the background section only when set. */
+  /** e.g. "8+". Shown as a large figure in the background section only when set. */
   yearsOfExperience: null as string | null,
 };
 
