@@ -1,4 +1,5 @@
 import { approach } from "../../content/approach";
+import { sectionIndex } from "../navigation";
 import { SectionHeader } from "../ui/Primitives";
 
 // Steps are numbered continuously across phases: 01–03, 04–07, 08–10.
@@ -11,7 +12,7 @@ export function Approach() {
     <section className="section" id="approach" aria-labelledby="approach-title">
       <div className="shell approach">
         <div className="approach__aside">
-          <SectionHeader id="approach-title" index="02" eyebrow="Approach" title="How I build AI systems">
+          <SectionHeader id="approach-title" index={sectionIndex("approach")} eyebrow="Method" title={approach.title}>
             <p>{approach.intro}</p>
           </SectionHeader>
           <p className="approach__statement">{approach.statement}</p>

@@ -9,9 +9,9 @@ export const site = {
     ? "https://roman-074.github.io/Portfolio"
     : "https://android-systems-portfolio.romanf.chatgpt.site",
   basePath: isGitHubPages ? "/Portfolio" : "",
-  title: `${profile.name} — ${profile.specialization} & ${profile.role}`,
+  title: `${profile.name} — ${profile.role} building ${profile.specialization}`,
   description:
-    "Senior Software Engineer building AI agents and LLM workflows for engineering and business automation: requirements analysis, spec-to-code audits and AI-assisted development.",
+    "Roman Fedorov, senior Android engineer who builds AI agents: requirements review, an AI-assisted development workflow and spec-to-code audits.",
   locale: "en_US",
   themeColor: "#0b0c0e",
 };

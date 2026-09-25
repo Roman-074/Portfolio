@@ -9,8 +9,6 @@ export type FlowLayer = {
   nodes: string[];
   /** Visually emphasised layer — normally the agent itself. */
   accent?: boolean;
-  /** Draw nodes as peers linked in both directions (e.g. sources cross-checked against each other). */
-  linked?: boolean;
 };
 
 export type FlowOwner = "developer" | "agent" | "shared";
@@ -23,7 +21,17 @@ export type FlowStep = {
 
 export type Diagram =
   | { kind: "layers"; title: string; layers: FlowLayer[] }
-  | { kind: "steps"; title: string; steps: FlowStep[] };
+  | { kind: "steps"; title: string; steps: FlowStep[] }
+  | {
+      kind: "crosscheck";
+      title: string;
+      /** Exactly three sources, drawn as the corners of a triangle. */
+      sources: [string, string, string];
+      agent: string;
+      findings: string[];
+      /** What the agent does when a source is unclear. */
+      rule: string;
+    };
 
 export type CaseNote = {
   title: string;
@@ -57,8 +65,11 @@ export type CaseStudy = {
   result: string;
   stack: string[];
   diagram: Diagram;
-  /** Short labelled lists shown next to the diagram, e.g. "Detects" / "Produces". */
-  lists?: { title: string; items: string[] }[];
+  /**
+   * Short labelled lists. In the featured case each is shown as a large count
+   * followed by `countLabel`, e.g. "8 kinds of problems it finds".
+   */
+  lists?: { title: string; items: string[]; countLabel?: string }[];
   /** Engineering decisions and principles for technical readers. */
   notes?: CaseNote[];
   links?: Link[];

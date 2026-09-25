@@ -2,7 +2,7 @@ import { ArrowUpRight, FileText } from "lucide-react";
 import { contactChannels } from "../../content/contacts";
 import { profile } from "../../content/profile";
 import { asset } from "../../content/site";
-import { hasContactSection } from "../navigation";
+import { hasContactSection, sectionIndex } from "../navigation";
 import { SectionHeader } from "../ui/Primitives";
 
 export function Contact() {
@@ -11,9 +11,14 @@ export function Contact() {
   return (
     <section className="section section--contact" id="contact" aria-labelledby="contact-title">
       <div className="shell contact">
-        <SectionHeader id="contact-title" index="05" eyebrow="Contact" title="Let’s talk">
+        <SectionHeader
+          id="contact-title"
+          index={sectionIndex("contact")}
+          eyebrow="Contact"
+          title="Hiring for AI engineering or a senior Android role?"
+        >
           <p>
-            Open to {formatList(profile.openTo)} roles, and to building AI agents for engineering and business
+            I’m open to {formatList(profile.openTo)} roles, and to building agents for engineering and business
             workflows.
           </p>
         </SectionHeader>

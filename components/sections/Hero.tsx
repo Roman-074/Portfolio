@@ -12,38 +12,27 @@ export function Hero() {
     <section className="hero" id="top" aria-labelledby="hero-title">
       <div className="shell hero__grid">
         <div className="hero__copy">
-          <p className="hero__byline">
-            <strong>{profile.name}</strong>
-            <span>
-              {profile.role} · {profile.specialization}
-            </span>
-          </p>
           <h1 id="hero-title" className="hero__title">
-            {profile.headline}
+            <span className="hero__name">{profile.name},</span> {profile.headline}
           </h1>
           <p className="hero__intro">{profile.intro}</p>
 
-          <ul className="hero__focus" aria-label="Focus areas">
-            {profile.focus.map((item) => (
-              <li key={item}>{item}</li>
-            ))}
-          </ul>
+          <p className="hero__open">
+            <span>Open to</span> {profile.openTo.join(" · ")}
+          </p>
 
           <div className="hero__actions">
             <a className="button button--primary" href="#projects">
-              View AI projects <ArrowRight aria-hidden />
+              Read the case studies <ArrowRight aria-hidden />
             </a>
-            <a className="button" href="#background">
-              Engineering background
-            </a>
+            {hasContactSection && (
+              <a className="button" href="#contact">
+                Contact
+              </a>
+            )}
             {profile.resumeUrl && (
               <a className="text-link" href={asset(profile.resumeUrl)}>
                 <FileText aria-hidden /> Resume
-              </a>
-            )}
-            {hasContactSection && (
-              <a className="text-link" href="#contact">
-                Contact
               </a>
             )}
           </div>
